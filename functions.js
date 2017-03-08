@@ -30,6 +30,7 @@ function getAreaCode(phoneNum) {
 * @throws {Error} If start or end not found
 */
 function between(string, start, end) {
+
     var startAt = string.indexOf(start);
 
     if (startAt == -1) {
@@ -110,12 +111,19 @@ function displayCOCode(inputId, outputId) {
 
     document.getElementById(outputId).innerHTML = outputText;
 }
-
+/**
+ * Extracts the line code of a phonenumber with the format (###) ###-####
+ * @throws {Error} If the format is incorrect
+ * @param   {string} phoneNum Phone number (###) ###-####
+ * @returns {string} line code
+ */
 function getLineCode(phoneNum){
+
         var lineCode;
+    phoneNum += "*";
 
     try {
-     lineCode = between(phoneNum, "-", "");
+     lineCode = between(phoneNum, "-","*");
        lineCode = lineCode.trim();
         if (lineCode.length == 4 && Number(lineCode)) {
             return lineCode;
@@ -126,7 +134,11 @@ function getLineCode(phoneNum){
         throw new Error("Invalid phone number: " + error.message);
     }
 }
-
+/**
+ * Displays the line code of the inputted phone number
+ * @param {string} inputId  id of the input text box
+ * @param {string} outputId id of the output <div> element
+ */
 function displayLineCode(inputId, outputId) {
 
             var outputText = "";
@@ -147,9 +159,3 @@ function displayLineCode(inputId, outputId) {
 
 
 
-function displayCodes(inputId, areaId, coId, lineId) {
-
-    displayAreaCode(inputId, areaId);
-    displayCOCode(inputId, coId);
-    displayLineCode(inputId, lineId);
-}
